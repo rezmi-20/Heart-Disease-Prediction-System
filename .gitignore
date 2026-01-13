@@ -1,0 +1,13 @@
+__pycache__/
+.venv/
+env/
+venv/
+*.pyc
+*.pyo
+*.pyd
+model.joblib
+*.egg-info/
+.idea/
+.vscode/
+__MACOSX/
+.DS_Store
