@@ -103,6 +103,40 @@ if predict_btn:
         else:
             st.info("No major risk factors detected.")
 
+        # Patient summary table
+        try:
+            if probability < 30:
+                risk_level = "LOW"
+            elif probability < 70:
+                risk_level = "MEDIUM"
+            else:
+                risk_level = "HIGH"
+
+            summary = pd.DataFrame({
+                "Age": [age],
+                "Gender": [sex],
+                "Chest Pain Type": [cp],
+                "Resting BP": [trestbps],
+                "Cholesterol": [chol],
+                "Fasting BS": ["Yes" if fbs_val==1 else "No"],
+                "Resting ECG": [restecg],
+                "Max HR": [thalach],
+                "Exercise Angina": ["Yes" if exang_val==1 else "No"],
+                "ST Depression": [oldpeak],
+                "ST Slope": [slope],
+                "Major Vessels": [ca],
+                "Thalassemia": [thal],
+                "Prediction": ["Heart Disease" if prediction==1 else "No Heart Disease"],
+                "Probability (%)": [f"{probability:.1f}"],
+                "Risk Level": [risk_level]
+            })
+
+            st.subheader("🧾 Patient Summary")
+            st.table(summary)
+        except Exception:
+            # If something goes wrong building the table, silently skip it
+            pass
+
     except Exception as e:
         st.error(f"Error loading model: {e}")
 
